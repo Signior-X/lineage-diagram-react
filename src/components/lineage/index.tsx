@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import LineageFlow from '../lineageFlow';
-import { IFlowTables } from '../lineageFlow/types';
 import { DEFAULT_FLOW_TABLES } from './constants';
+import { IFlowTables } from '../lineageFlow/types';
+import LineageFlow from '../lineageFlow';
 
 interface LineageProps {
 }

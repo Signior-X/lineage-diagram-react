@@ -1,6 +1,6 @@
 import dagre from 'dagre';
 import { Edge, HandleType, MarkerType, Node, Position } from 'reactflow';
-import { IFlowTable, IFlowTables, LineageNodeData } from './types';
+import { IEdges, IExpanded, IFlowTable, IFlowTables, ILineageNodes, LineageNodeData, SetState } from './types';
 
 export const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'TB') => {
   const dagreGraph = new dagre.graphlib.Graph();
@@ -40,26 +40,32 @@ export const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'T
 export const getNodeAndEdgesUsingSource = (
   tables: IFlowTables,
   sources: string[],
-  handleUpClick: (id: string) => void,
-  handleDownClick: (id: string) => void
+  setNodes: SetState<ILineageNodes>,
+  setExpanded: SetState<IExpanded>,
+  setActiveTable: SetState<string | undefined>,
+  setActiveColumn: SetState<string | undefined>
 ) => {
-  const nodes: { [key: string]: Node<LineageNodeData> } = {};
-  const edges: { [key: string]: Edge } = {};
+  const nodes: ILineageNodes = {};
+  const edges: IEdges = {};
 
   // 1. Create some utility functions
-  const addNode = (table: IFlowTable, up: boolean, down: boolean, hidden: boolean) => {
+  const addNode = (table: IFlowTable, showUpButton: boolean, showDownButton: boolean, hidden: boolean) => {
     if (!table) return;
     if (nodes[table.id]) return;
 
     const nodeData: LineageNodeData = {
       id: table.id,
       table: table,
-      up: up && table.sources.length > 0,
-      upClick: handleUpClick,
+      setNodes: setNodes,
+      setExpanded,
+      showUpButton: showUpButton && table.sources.length > 0,
       expandedUp: false,
-      down: down && table.children.length > 0,
-      downClick: handleDownClick,
+      showDownButton: showDownButton && table.children.length > 0,
       expandedDown: false,
+      showColumns: true,
+      setActiveTable,
+      setActiveColumn,
+      activeColumns: {},
     }
 
     nodes[table.id] = {
@@ -109,7 +115,12 @@ export const getNodeAndEdgesUsingSource = (
         type: MarkerType.Arrow,
       },
       hidden: true,
+      style: {
+        stroke: "grey"
+      }
     };
+
+    return;
   }
 
   const processed: { [key: string]: boolean } = {};
@@ -200,18 +211,16 @@ export const getNodeAndEdgesUsingSource = (
 }
 
 export const getNodeAndEdgesFromExpanded = (
-  oldNodes: { [index: string]: Node<LineageNodeData> },
-  oldEdges: { [index: string]: Edge },
+  oldNodes: ILineageNodes,
+  oldEdges: IEdges,
   sources: string[],
   expanded: { [key: string]: boolean },
-  handleUpClick: (id: string) => void,
-  handleDownClick: (id: string) => void
 ): {
-  edges: { [key: string]: Edge };
-  nodes: { [key: string]: Node<LineageNodeData> };
+  edges: IEdges;
+  nodes: ILineageNodes;
 } => {
-  const edges: { [key: string]: Edge } = { ...oldEdges };
-  const nodes: { [key: string]: Node<LineageNodeData> } = { ...oldNodes };
+  const edges: IEdges = { ...oldEdges };
+  const nodes: ILineageNodes = { ...oldNodes };
 
   // 1. Do a dfs with a list of processed nodes
   const visibleNodes: { [key: string]: boolean } = {};
@@ -235,7 +244,9 @@ export const getNodeAndEdgesFromExpanded = (
 
     visibleNodes[nodeId] = Boolean(visibleNodes[nodeId] || visible);
 
-    // if (processed[tableId]) return;      // If already processed
+    // Each node is processed at max two times -> n * (2 - visiblities)
+    const key = nodeId + "__KEY__" + visible;
+    if (processed[key]) return;      // If already processed
     if (processing[nodeId]) return;      // Cycles, we right now ignore
 
     processing[nodeId] = true;
@@ -276,7 +287,10 @@ export const getNodeAndEdgesFromExpanded = (
     if (!node) return;                  // Can happen if table with this id not exists
 
     visibleNodes[nodeId] = Boolean(visibleNodes[nodeId] || visible);
-    // if (processed[nodeId]) return;      // If already processed
+
+    // Each node is processed at max two times -> n * (2 - visiblities)
+    const key = nodeId + "__KEY__" + visible;
+    if (processed[key]) return;      // If already processed
     if (processing[nodeId]) return;      // Cycles, we right now ignore
 
     if (!expanded[nodeId]) {
@@ -326,10 +340,8 @@ export const getNodeAndEdgesFromExpanded = (
   // console.log("VISBLE NODES: ", visibleNodes);
   Object.values(nodes).forEach((node) => {
     node.hidden = Boolean(!visibleNodes[node.id]);
-    node.data.upClick = handleUpClick;
     const expandedUp = Boolean(node.data.table.sources.length > 0 && expanded[node.data.table.sources[0]]);
     node.data.expandedUp = expandedUp;
-    node.data.downClick = handleDownClick;
     node.data.expandedDown = expanded[node.id];
   });
 

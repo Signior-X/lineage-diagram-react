@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Handle, Position } from 'reactflow';
-import { LineageNodeData } from './types';
+import { IExpanded, ILineageNodes, LineageNodeData } from './types';
 import { getHandleId } from './utils';
 
 interface LineageNodeProps {
@@ -9,14 +9,67 @@ interface LineageNodeProps {
 const LineageNode: FC<LineageNodeProps> = (props) => {
   const { data } = props;
 
+  const handleUpClick = () => {
+    console.log("Up click: ", data.id);
+
+    data.setExpanded((expanded: IExpanded) => {
+      const newExpanded = { ...expanded };
+      let toExpand = true;
+
+      for (const source of data.table.sources) {
+        if (newExpanded[source]) {
+          toExpand = false;
+          break;
+        }
+      }
+
+      for (const source of data.table.sources) {
+        newExpanded[source] = toExpand;
+      }
+
+      return newExpanded;
+    });
+  }
+
+  const handleDownClick = () => {
+    console.log("Down click: ", data.id);
+
+    data.setExpanded((expanded: IExpanded) => {
+      const newExpanded = { ...expanded };
+      newExpanded[data.id] = !expanded[data.id];
+      return newExpanded;
+    });
+  }
+
+  const handleShowColumns = () => {
+    data.setNodes((nodes: ILineageNodes) => {
+      const newNodes = { ...nodes };
+
+      Object.values(newNodes).forEach((node) => {
+        if (node.id === data.id) {
+          node.data.showColumns = !node.data.showColumns;
+        }
+      });
+
+      return newNodes;
+    });
+  }
+
+  const setActiveColumn = (colId: string) => {
+    data.setActiveTable(data.table.id);
+    data.setActiveColumn(colId);
+  }
+
+  console.log("Render LineageNode: ", data.id);
+
   return (
     <>
-      <div className='flex flex-col bg-neutral-focus'>
+      <div className='flex flex-col bg-neutral/40'>
         <div className="flex flex-row relative gap-2">
           <Handle id={getHandleId("target", data.table.id)} type="target" position={Position.Left} />
-          {data.up ?
+          {(data.showUpButton) ?
             <div className="flex items-center">
-              <button onClick={() => data.upClick(data.id)} className="rounded-3xl bg-neutral text-neutral-content w-8 text-2xl"
+              <button onClick={() => handleUpClick()} className="rounded-3xl bg-neutral text-neutral-content w-8 text-2xl"
                 style={
                   data.expandedUp ? {
                     transition: "transform 0.5s",
@@ -36,14 +89,17 @@ const LineageNode: FC<LineageNodeProps> = (props) => {
               </h2>
               <p>{data.id}</p>
               <div className="card-actions justify-end">
-                <div className="badge badge-sm badge-outline">Fashion</div>
-                <div className="badge badge-sm badge-outline">Products</div>
+                {Object.keys(data.table.columns).length > 0 ?
+                  <button onClick={() => handleShowColumns()} className={"badge" + (data.showColumns ? " badge-outline" : " badge-primary")}>
+                    {data.showColumns ? "Collapse" : "Expand"}
+                  </button>
+                  : null}
               </div>
             </div>
           </div>
-          {data.down ?
+          {(data.showDownButton) ?
             <div className="flex items-center">
-              <button onClick={() => data.downClick(data.id)} className="rounded-3xl bg-neutral text-neutral-content w-8 text-2xl"
+              <button onClick={() => handleDownClick()} className="rounded-3xl bg-neutral text-neutral-content w-8 text-2xl"
                 style={
                   data.expandedDown ? {
                     transition: "transform 0.5s",
@@ -57,25 +113,32 @@ const LineageNode: FC<LineageNodeProps> = (props) => {
             : null}
           <Handle id={getHandleId("source", data.table.id)} type="source" position={Position.Right} />
         </div>
-        <div className="flex flex-col">
-          {Object.values(data.table.columns).map((column) => {
-            return (
-              <div key={column.id} className="relative px-2 border">
-                <Handle
-                  id={getHandleId("target", data.table.id, column.id)}
-                  type="target"
-                  position={Position.Left}
-                />
-                {column.name}
-                <Handle
-                  id={getHandleId("source", data.table.id, column.id)}
-                  type="source"
-                  position={Position.Right}
-                />
-              </div>
-            )
-          })}
-        </div>
+
+        {data.showColumns ?
+          <div className="flex flex-col">
+            {Object.values(data.table.columns).map((column) => {
+              return (
+                <button
+                  onClick={() => setActiveColumn(column.id)}
+                  key={column.id}
+                  className={`relative px-2 border my-0.5 py-1 ${data.activeColumns[column.id] ? "border-yellow-200" : "border-slate-500"}`}
+                >
+                  <Handle
+                    id={getHandleId("target", data.table.id, column.id)}
+                    type="target"
+                    position={Position.Left}
+                  />
+                  {column.name}
+                  <Handle
+                    id={getHandleId("source", data.table.id, column.id)}
+                    type="source"
+                    position={Position.Right}
+                  />
+                </button>
+              )
+            })}
+          </div>
+          : null}
       </div>
     </>
   );

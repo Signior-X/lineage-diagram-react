@@ -1,12 +1,21 @@
+import { Dispatch, SetStateAction } from "react";
+import { Edge, Node } from "reactflow";
+
+export type SetState<T> = Dispatch<SetStateAction<T>>;
+
 export interface LineageNodeData {
     id: string;
+    setNodes: SetState<ILineageNodes>;
+    setExpanded: SetState<IExpanded>;
     table: IFlowTable;
-    up: boolean;
-    upClick: (id: string) => void;
+    showUpButton: boolean;
     expandedUp: boolean;
-    down: boolean;
-    downClick: (id: string) => void;
+    showDownButton: boolean;
     expandedDown: boolean;
+    showColumns: boolean;
+    setActiveTable: SetState<string | undefined>;
+    setActiveColumn: SetState<string | undefined>;
+    activeColumns: { [key: string]: boolean };
 }
 
 export interface IFlowTables {
@@ -35,4 +44,16 @@ export interface IColumn {
 export interface IColumnRef {
     tableId: string;
     columnId: string;
+}
+
+export interface ILineageNodes {
+    [index: string]: Node<LineageNodeData>
+}
+
+export interface IEdges {
+    [index: string]: Edge
+}
+
+export interface IExpanded {
+    [key: string]: boolean;
 }
