@@ -1,6 +1,7 @@
 import dagre from 'dagre';
 import { Edge, HandleType, MarkerType, Node, Position } from 'reactflow';
 import { IEdges, IExpanded, IFlowTable, IFlowTables, ILineageNodes, LineageNodeData, SetState } from './types';
+import { getNodeWidth } from '../ui-utils';
 
 export const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'TB') => {
   const dagreGraph = new dagre.graphlib.Graph();
@@ -73,7 +74,7 @@ export const getNodeAndEdgesUsingSource = (
       type: 'lineageNode',
       data: nodeData,
       position: { x: 0, y: 0 },   // Just passing, will be updated by dagre
-      width: 400,
+      width: getNodeWidth(table.name) + 160,
       height: 200 + (Object.keys(table.columns).length * 24),
       hidden: hidden,
     };

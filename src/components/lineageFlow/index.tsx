@@ -46,13 +46,14 @@ const LineageFlow: FC<LineageFlowProps> = (props) => {
       tableNodes[node.id].position = node.position;
     });
 
-    const { nodes: newNodes, edges: newEdges } = getNodeAndEdgesFromExpanded(tableNodes, tableEdges, sources, expanded);
+    const { nodes: newNodes, edges: newEdges } = getNodeAndEdgesFromExpanded(tableNodes, tableEdges, sources, {});
 
+    setExpanded({});
     setActiveColumn(undefined);
     setActiveTable(undefined);
     setNodes(newNodes);
     setEdges(newEdges);
-  }, [tables, sources]);
+  }, [tables, sources, setExpanded, setActiveTable, setActiveColumn]);
 
   useEffect(() => {
     console.log("Expanded: ", expanded);
@@ -123,6 +124,10 @@ const LineageFlow: FC<LineageFlowProps> = (props) => {
     setNodes(newNodes);
     setEdges(newEdges);
   }, [activeTable, activeColumn]);
+
+
+  console.log("Nodes:", nodes);
+  console.log("Edges:", edges);
 
   return (
     <ReactFlow

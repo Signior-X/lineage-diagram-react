@@ -1,11 +1,13 @@
 import { IFlowTable, IFlowTables } from "../lineageFlow/types";
 
+// Consider Tables as resource
+// Consider columns as parameters
 export const DEFAULT_FLOW_TABLES = () => {
     const tables: IFlowTables = {};
 
     for (let i = 0; i <= 10; i++) {
-        const id = "table" + i;
-        const name = "Table " + i;
+        const id = "resource" + i;
+        const name = "Resource " + i;
         const table: IFlowTable = {
             id: id,
             name: name,
@@ -21,37 +23,37 @@ export const DEFAULT_FLOW_TABLES = () => {
         tables[child].sources.push(source);
     }
 
-    addEdge("table0", "table1");
-    addEdge("table1", "table2");
-    addEdge("table1", "table3");
-    addEdge("table2", "table9");
-    addEdge("table3", "table9");
-    addEdge("table4", "table3");
-    addEdge("table9", "table5");
-    addEdge("table3", "table6");
-    addEdge("table3", "table7");
-    addEdge("table9", "table8");
-    addEdge("table6", "table8");
-    addEdge("table5", "table10");
-    addEdge("table8", "table10");
+    addEdge("resource0", "resource1");
+    addEdge("resource1", "resource2");
+    addEdge("resource1", "resource3");
+    addEdge("resource2", "resource9");
+    addEdge("resource3", "resource9");
+    addEdge("resource4", "resource3");
+    addEdge("resource9", "resource5");
+    addEdge("resource3", "resource6");
+    addEdge("resource3", "resource7");
+    addEdge("resource9", "resource8");
+    addEdge("resource6", "resource8");
+    addEdge("resource5", "resource10");
+    addEdge("resource8", "resource10");
 
-    tables["table3"].columns = {
+    tables["resource3"].columns = {
         "column1": {
             id: "column1",
             name: "Column 1",
             sources: [
                 {
-                    tableId: "table4",
+                    tableId: "resource4",
                     columnId: "column1",
                 }
             ],
             children: [
                 {
-                    tableId: "table7",
+                    tableId: "resource7",
                     columnId: "column1",
                 },
                 {
-                    tableId: "table9",
+                    tableId: "resource9",
                     columnId: "column3"
                 }
             ],
@@ -62,20 +64,20 @@ export const DEFAULT_FLOW_TABLES = () => {
             sources: [],
             children: [
                 {
-                    tableId: "table7",
+                    tableId: "resource7",
                     columnId: "column2",
                 }
             ],
         },
     };
 
-    tables["table7"].columns = {
+    tables["resource7"].columns = {
         "column1": {
             id: "column1",
             name: "Column 1",
             sources: [
                 {
-                    tableId: "table1",
+                    tableId: "resource1",
                     columnId: "column1",
                 }
             ],
@@ -86,7 +88,7 @@ export const DEFAULT_FLOW_TABLES = () => {
             name: "Column 2",
             sources: [
                 {
-                    tableId: "table1",
+                    tableId: "resource1",
                     columnId: "column2",
                 }
             ],
@@ -94,32 +96,32 @@ export const DEFAULT_FLOW_TABLES = () => {
         },
     };
 
-    tables["table9"].columns = {
+    tables["resource9"].columns = {
         "column3": {
             id: "column3",
             name: "Column 3",
             sources: [
                 {
-                    tableId: "table3",
+                    tableId: "resource3",
                     columnId: "column1",
                 }
             ],
             children: [
                 {
-                    tableId: "table5",
+                    tableId: "resource5",
                     columnId: "column1",
                 }
             ],
         }
     }
 
-    tables["table5"].columns = {
+    tables["resource5"].columns = {
         "column1": {
             id: "column1",
             name: "Column 1",
             sources: [
                 {
-                    tableId: "table9",
+                    tableId: "resource9",
                     columnId: "column3",
                 }
             ],
@@ -127,14 +129,14 @@ export const DEFAULT_FLOW_TABLES = () => {
         }
     }
 
-    tables["table4"].columns = {
+    tables["resource4"].columns = {
         "column1": {
             id: "column1",
             name: "Column 1",
             sources: [],
             children: [
                 {
-                    tableId: "table3",
+                    tableId: "resource3",
                     columnId: "column1",
                 }
             ]

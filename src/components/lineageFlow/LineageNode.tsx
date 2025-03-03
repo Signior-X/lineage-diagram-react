@@ -2,6 +2,8 @@ import { FC } from 'react';
 import { Handle, Position } from 'reactflow';
 import { IExpanded, ILineageNodes, LineageNodeData } from './types';
 import { getHandleId } from './utils';
+import { ArrowLeftCircle, Plus, PlusCircle } from 'lucide-react';
+import { getNodeWidth } from '../ui-utils';
 
 interface LineageNodeProps {
   data: LineageNodeData;
@@ -69,28 +71,29 @@ const LineageNode: FC<LineageNodeProps> = (props) => {
           <Handle id={getHandleId("target", data.table.id)} type="target" position={Position.Left} />
           {(data.showUpButton) ?
             <div className="flex items-center">
-              <button onClick={() => handleUpClick()} className="rounded-3xl bg-neutral text-neutral-content w-8 text-2xl"
-                style={
+              <button onClick={() => handleUpClick()} className="flex flex-row justify-end rounded-3xl bg-neutral text-neutral-content w-8">
+                <ArrowLeftCircle style={
                   data.expandedUp ? {
                     transition: "transform 0.5s",
                     transform: "rotateZ(45deg)",
                   } : {
                     transition: "transform 0.5s",
-                  }}>
-                {"-"}
+                  }} />
               </button>
             </div>
             : null}
           <div className='card rounded-sm bg-neutral text-neutral-content shadow-xl'>
-            <div className="card-body">
+            <div className="card-body" style={{ width: `${getNodeWidth(data.table.name)}px` }}>
+              <div className='flex flex-col gap-0'>
               <h2 className="card-title">
                 {data.table.name}
-                <div className="badge badge-secondary">NEW</div>
+                {/* <div className="badge badge-secondary">NEW</div> */}
               </h2>
               <p>{data.id}</p>
+              </div>
               <div className="card-actions justify-end">
                 {Object.keys(data.table.columns).length > 0 ?
-                  <button onClick={() => handleShowColumns()} className={"badge" + (data.showColumns ? " badge-outline" : " badge-primary")}>
+                  <button onClick={() => handleShowColumns()} className={"badge leading-[inherit]" + (data.showColumns ? " badge-outline" : " badge-primary")}>
                     {data.showColumns ? "Collapse" : "Expand"}
                   </button>
                   : null}
@@ -99,15 +102,14 @@ const LineageNode: FC<LineageNodeProps> = (props) => {
           </div>
           {(data.showDownButton) ?
             <div className="flex items-center">
-              <button onClick={() => handleDownClick()} className="rounded-3xl bg-neutral text-neutral-content w-8 text-2xl"
-                style={
+              <button onClick={() => handleDownClick()} className="rounded-3xl bg-neutral text-neutral-content w-8">
+                <PlusCircle style={
                   data.expandedDown ? {
                     transition: "transform 0.5s",
                     transform: "rotateZ(45deg)",
                   } : {
                     transition: "transform 0.5s",
-                  }}>
-                {"+"}
+                  }} />
               </button>
             </div>
             : null}

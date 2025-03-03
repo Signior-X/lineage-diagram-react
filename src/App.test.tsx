@@ -18,7 +18,7 @@ class ResizeObserver {
 
 window.ResizeObserver = ResizeObserver;
 
-test('renders table3 only in the start with select', () => {
+test('renders resource3 only in the start with select', () => {
   const result = render(<App />);
 
   // Test that select is present
@@ -31,7 +31,7 @@ test('renders table3 only in the start with select', () => {
 
   const firstNode = reactFlowNodes[0];
   const dataId = firstNode.getAttribute("data-id");
-  expect(dataId).toBe("table3");
+  expect(dataId).toBe("resource3");
 });
 
 test('expanding backward works', () => {
@@ -55,7 +55,7 @@ test('expanding backward works', () => {
     dataIds.push(dataId ? dataId : "");
   });
 
-  const expectedOpen: string[] = [...tables["table3"].sources];
-  expectedOpen.push("table3");
+  const expectedOpen: string[] = [...tables["resource3"].sources];
+  expectedOpen.push("resource3");
   expect(dataIds.sort()).toEqual(expectedOpen.sort());
 });
