@@ -62,8 +62,6 @@ const LineageNode: FC<LineageNodeProps> = (props) => {
     data.setActiveColumn(colId);
   }
 
-  console.log("Render LineageNode: ", data.id);
-
   return (
     <>
       <div className='flex flex-col bg-neutral/40'>

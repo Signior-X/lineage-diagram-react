@@ -59,7 +59,6 @@ const LineageFlow: FC<LineageFlowProps> = (props) => {
   }, [tables, sources, setExpanded, setActiveTable, setActiveColumn]);
 
   useEffect(() => {
-    console.log("Expanded: ", expanded);
     const { nodes: newNodes, edges: newEdges } = getNodeAndEdgesFromExpanded(nodes, edges, sources, expanded);
     setNodes(newNodes);
     setEdges(newEdges);
