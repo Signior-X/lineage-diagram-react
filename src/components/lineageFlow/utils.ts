@@ -240,7 +240,7 @@ export const getNodeAndEdgesFromExpanded = (
 
   const dfsUp = (nodeId: string, visible: boolean) => {
     const node = oldNodes[nodeId];
-    console.log("DFS Up: Node:", nodeId);
+    // console.log("DFS Up: Node:", nodeId);
     if (!node) return;               // Can happen if table with this id not exists
 
     visibleNodes[nodeId] = Boolean(visibleNodes[nodeId] || visible);
@@ -284,7 +284,7 @@ export const getNodeAndEdgesFromExpanded = (
 
   const dfsDown = (nodeId: string, visible: boolean) => {
     const node = oldNodes[nodeId];
-    console.log("DFS Down: Node:", nodeId);
+    // console.log("DFS Down: Node:", nodeId);
     if (!node) return;                  // Can happen if table with this id not exists
 
     visibleNodes[nodeId] = Boolean(visibleNodes[nodeId] || visible);
