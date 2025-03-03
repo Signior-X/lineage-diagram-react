@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/lineage-diagram-react/static/css/main.852b57d4.css",
+    "main.js": "/lineage-diagram-react/static/js/main.3dc907be.js",
+    "static/js/787.79763a6d.chunk.js": "/lineage-diagram-react/static/js/787.79763a6d.chunk.js",
+    "index.html": "/lineage-diagram-react/index.html",
+    "main.852b57d4.css.map": "/lineage-diagram-react/static/css/main.852b57d4.css.map",
+    "main.3dc907be.js.map": "/lineage-diagram-react/static/js/main.3dc907be.js.map",
+    "787.79763a6d.chunk.js.map": "/lineage-diagram-react/static/js/787.79763a6d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.852b57d4.css",
+    "static/js/main.3dc907be.js"
+  ]
+}
