@@ -6,6 +6,7 @@ import ReactFlow, {
   Node,
   MiniMap,
   MarkerType,
+  ReactFlowInstance,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import LineageNode from './LineageNode';
@@ -26,6 +27,7 @@ const LineageFlow: FC<LineageFlowProps> = (props) => {
   const [expanded, setExpanded] = useState<IExpanded>({});
   const [activeTable, setActiveTable] = useState<string>();
   const [activeColumn, setActiveColumn] = useState<string>();
+  const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance>();
 
   const nodeTypes = useMemo(
     () => ({
@@ -53,6 +55,7 @@ const LineageFlow: FC<LineageFlowProps> = (props) => {
     setActiveTable(undefined);
     setNodes(newNodes);
     setEdges(newEdges);
+    setTimeout(() => window.requestAnimationFrame(() => reactFlowInstance?.fitView()), 0);
   }, [tables, sources, setExpanded, setActiveTable, setActiveColumn]);
 
   useEffect(() => {
@@ -125,12 +128,12 @@ const LineageFlow: FC<LineageFlowProps> = (props) => {
     setEdges(newEdges);
   }, [activeTable, activeColumn]);
 
-
   console.log("Nodes:", nodes);
   console.log("Edges:", edges);
 
   return (
     <ReactFlow
+      onInit={(instance) => setReactFlowInstance(instance)}
       nodes={Object.values(nodes)}
       nodeTypes={nodeTypes}
       edges={Object.values(edges)}
