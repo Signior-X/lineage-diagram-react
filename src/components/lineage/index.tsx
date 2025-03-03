@@ -1,46 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { DEFAULT_FLOW_TABLES } from './constants';
 import { IFlowTable, IFlowTables } from '../lineageFlow/types';
 import LineageFlow from '../lineageFlow';
-// import RolloutData from "../../data/IngestionRegionAgnosticEnv_AllResources.Buildout.json";
-// import RolloutData from "../../data/Resources.PRD.INC0A.RolloutSpec.json";
 
 interface LineageProps {
+  tables: IFlowTables;
 }
 const Lineage: React.FC<LineageProps> = (props) => {
-  const [tables, setTables] = useState<IFlowTables>({});
+  const { tables } = props;
   const [source, setSource] = useState<string>();
-
-  useEffect(() => {
-    const tables = DEFAULT_FLOW_TABLES();
-    setTables(tables);
-
-    // console.log("RolloutData", RolloutData.orchestratedSteps);
-    // const newTables: IFlowTables = {}
-    
-    // const tablesList: IFlowTable[] = RolloutData.orchestratedSteps
-    // // .filter((step) => step.targetType === "ServiceResourceDefinition")
-    // .map((step) => {
-    //   const children = RolloutData.orchestratedSteps
-    //     .filter((child) => child.DependsOn?.includes(step.name))
-    //     .map((child) => child.name);
-
-    //   return {
-    //     id: step.name,
-    //     name: step.targetName,
-    //     sources: step.DependsOn ?? [],
-    //     children: children,
-    //     columns: {}
-    //   }
-    // });
-
-    // tablesList.forEach((table) => {
-    //   newTables[table.id] = table;
-    // });
-
-    // setSource("");
-    // setTables(newTables);
-  }, []);
 
   return (
     <div className='relative flex flex-col h-screen w-screen'>

@@ -138,8 +138,9 @@ const LineageFlow: FC<LineageFlowProps> = (props) => {
       nodeTypes={nodeTypes}
       edges={Object.values(edges)}
       fitView={true}
+      minZoom={0.2}
     >
-      {/* <MiniMap /> */}
+      <MiniMap />
       <Background />
       <Controls />
     </ReactFlow>
