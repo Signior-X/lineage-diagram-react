@@ -4,10 +4,17 @@ import LineageFlow from '../lineageFlow';
 
 interface LineageProps {
   tables: IFlowTables;
+  source: string | undefined;
+  setSource: (source: string | undefined) => void;
 }
 const Lineage: React.FC<LineageProps> = (props) => {
-  const { tables } = props;
-  const [source, setSource] = useState<string>();
+  const { tables, source, setSource } = props;
+  const [sources, setSources] = useState<string[]>([]);
+
+  useEffect(() => {
+    const sources: string[] = source ? [source] : [];
+    setSources(sources);
+  }, [source]);
 
   return (
     <div className='relative flex flex-col h-screen w-screen'>
@@ -23,7 +30,7 @@ const Lineage: React.FC<LineageProps> = (props) => {
       </div>
       </div>
       <div className='flex flex-1'>
-        <LineageFlow tables={tables} sources={[source ?? ""]} />
+        <LineageFlow tables={tables} sources={sources} />
       </div>
     </div>
   );

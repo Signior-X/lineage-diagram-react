@@ -7,6 +7,7 @@ import { DEFAULT_FLOW_TABLES } from './components/lineage/constants';
 interface AppProps {
 }
 const App: React.FC<AppProps> = (props) => {
+  const [source, setSource] = useState<string>();
   const [tables, setTables] = useState<IFlowTables>({});
 
   const getTablesList = (rolloutData: RolloutProps) => {
@@ -34,7 +35,7 @@ const App: React.FC<AppProps> = (props) => {
     // const tables = DEFAULT_FLOW_TABLES();
     // setTables(tables);
     async function getTables() {
-      const newTables: IFlowTables = DEFAULT_FLOW_TABLES();  
+      const newTables: IFlowTables = DEFAULT_FLOW_TABLES();
       // const tablesList = getTablesList(await import("./data/Resources.PRD.INC0A.RolloutSpec.json"));
       // tablesList.forEach((table) => {
       //   newTables[table.id] = table;
@@ -47,7 +48,7 @@ const App: React.FC<AppProps> = (props) => {
   }, []);
 
   return (
-    <Lineage tables={tables} />
+    <Lineage tables={tables} source={source} setSource={setSource} />
   )
 }
 

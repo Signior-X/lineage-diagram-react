@@ -128,9 +128,6 @@ const LineageFlow: FC<LineageFlowProps> = (props) => {
     setEdges(newEdges);
   }, [activeTable, activeColumn]);
 
-  console.log("Nodes:", nodes);
-  console.log("Edges:", edges);
-
   return (
     <ReactFlow
       onInit={(instance) => setReactFlowInstance(instance)}
