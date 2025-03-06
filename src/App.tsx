@@ -87,11 +87,28 @@ const App: React.FC<AppProps> = (props) => {
       await DEMO2();
     }
 
-    getTables();
+    // getTables();
   }, []);
 
   return (
-    <Lineage tables={tables} source={source} setSource={setSource} />
+    <>
+      <div className="flex flex-col justify-content items-center h-screen w-screen">
+
+        {Object.keys(tables).length > 0 ? 
+          <div className="flex flex-row flex-1">
+          <Lineage tables={tables} source={source} setSource={setSource} />
+        </div>
+      : 
+        <div className="flex flex-col m-auto gap-8 justify-between p-8">
+          <h2 className='text-2xl'> Please choose the demo! </h2>
+          <button className='btn btn-primary' onClick={() => {DEMO0()}}> Demo Resources </button>
+          <button className='btn btn-secondary' onClick={() => {DEMO1()}}> SQL Resources </button>
+          <button className='btn btn-accent' onClick={() => {DEMO2()}}> Sample app resources </button>
+        </div>
+        }
+
+      </div>
+    </>
   )
 }
 
