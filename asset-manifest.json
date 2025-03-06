@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/lineage-diagram-react/static/css/main.852b57d4.css",
-    "main.js": "/lineage-diagram-react/static/js/main.b812fbd0.js",
+    "main.css": "/lineage-diagram-react/static/css/main.819841ff.css",
+    "main.js": "/lineage-diagram-react/static/js/main.a701c9c6.js",
     "static/js/824.bdafbb3e.chunk.js": "/lineage-diagram-react/static/js/824.bdafbb3e.chunk.js",
     "static/js/203.9dc73bac.chunk.js": "/lineage-diagram-react/static/js/203.9dc73bac.chunk.js",
     "static/js/915.d22087b7.chunk.js": "/lineage-diagram-react/static/js/915.d22087b7.chunk.js",
     "static/js/787.79763a6d.chunk.js": "/lineage-diagram-react/static/js/787.79763a6d.chunk.js",
     "index.html": "/lineage-diagram-react/index.html",
-    "main.852b57d4.css.map": "/lineage-diagram-react/static/css/main.852b57d4.css.map",
-    "main.b812fbd0.js.map": "/lineage-diagram-react/static/js/main.b812fbd0.js.map",
+    "main.819841ff.css.map": "/lineage-diagram-react/static/css/main.819841ff.css.map",
+    "main.a701c9c6.js.map": "/lineage-diagram-react/static/js/main.a701c9c6.js.map",
     "787.79763a6d.chunk.js.map": "/lineage-diagram-react/static/js/787.79763a6d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.852b57d4.css",
-    "static/js/main.b812fbd0.js"
+    "static/css/main.819841ff.css",
+    "static/js/main.a701c9c6.js"
   ]
 }
