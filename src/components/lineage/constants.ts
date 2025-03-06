@@ -40,7 +40,7 @@ export const DEFAULT_FLOW_TABLES = () => {
     tables["resource3"].columns = {
         "column1": {
             id: "column1",
-            name: "Column 1",
+            name: "Parameter 1",
             sources: [
                 {
                     tableId: "resource4",
@@ -60,7 +60,7 @@ export const DEFAULT_FLOW_TABLES = () => {
         },
         "column2": {
             id: "column2",
-            name: "Column 2",
+            name: "Parameter 2",
             sources: [],
             children: [
                 {
@@ -74,7 +74,7 @@ export const DEFAULT_FLOW_TABLES = () => {
     tables["resource7"].columns = {
         "column1": {
             id: "column1",
-            name: "Column 1",
+            name: "Parameter 1",
             sources: [
                 {
                     tableId: "resource1",
@@ -85,7 +85,7 @@ export const DEFAULT_FLOW_TABLES = () => {
         },
         "column2": {
             id: "column2",
-            name: "Column 2",
+            name: "Parameter 2",
             sources: [
                 {
                     tableId: "resource1",
@@ -99,7 +99,7 @@ export const DEFAULT_FLOW_TABLES = () => {
     tables["resource9"].columns = {
         "column3": {
             id: "column3",
-            name: "Column 3",
+            name: "Parameter 3",
             sources: [
                 {
                     tableId: "resource3",
@@ -118,7 +118,7 @@ export const DEFAULT_FLOW_TABLES = () => {
     tables["resource5"].columns = {
         "column1": {
             id: "column1",
-            name: "Column 1",
+            name: "Parameter 1",
             sources: [
                 {
                     tableId: "resource9",
@@ -132,7 +132,7 @@ export const DEFAULT_FLOW_TABLES = () => {
     tables["resource4"].columns = {
         "column1": {
             id: "column1",
-            name: "Column 1",
+            name: "Parameter 1",
             sources: [],
             children: [
                 {
